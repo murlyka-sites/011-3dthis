@@ -1,0 +1,45 @@
+doctype html
+html
+	head
+		meta(charset="UTF-8")
+		meta(name="SKYPE_TOOLBAR", content="SKYPE_TOOLBAR_PARSER_COMPATIBLE")
+		meta(content="telephone=no", name="format-detection")
+		meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+		title
+			| 3Dthis
+		link(rel="stylesheet", href="css/bootstrap.css")
+		link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css")
+		link(rel="stylesheet", href="css/jquery.scrollUp.min.css")
+		link(rel="stylesheet", href="css/style.css")
+		//- link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css")
+	body
+		include jade/header.jade
+		include jade/main.jade
+		include jade/how-work.jade
+		include jade/order.jade
+		include jade/about.jade
+		include jade/foo.jade
+		//- include jade/nav.jade		
+		//- include jade/main.jade
+		//- include jade/contest.jade
+		//- include jade/news.jade
+		//- include jade/concert.jade
+		//- include jade/foo.jade
+		.hidden
+			.popup#call
+				h3.text__h3.popup__title
+					| Обратный звонок
+				form(method="POST")
+					input.popup__input(name="name", type="text", placeholder="Имя", required)
+					input.popup__input.input--phone(name="phone", type="text", placeholder="Телефон", required)
+					button.btn.btn_theme_white.popup__btn(type="submit")
+						| Отправить
+			.gradient.popup#success
+				h3.text__h3.popup__title.popup__title--success
+					| Форма успешно отправлена!
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js")
+		script(src="js/jquery.form.min.js")
+		script(src="js/jquery.scrollUp.min.js")
+		script(src="js/main.js")
