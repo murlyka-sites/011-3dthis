@@ -11,20 +11,13 @@ html
 		link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css")
 		link(rel="stylesheet", href="css/jquery.scrollUp.min.css")
 		link(rel="stylesheet", href="css/style.css")
-		//- link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css")
 	body
-		include jade/header.jade
-		include jade/main.jade
-		include jade/how-work.jade
-		include jade/order.jade
-		include jade/about.jade
-		include jade/foo.jade
-		//- include jade/nav.jade		
-		//- include jade/main.jade
-		//- include jade/contest.jade
-		//- include jade/news.jade
-		//- include jade/concert.jade
-		//- include jade/foo.jade
+		include pug/header.pug
+		include pug/main.pug
+		include pug/how-work.pug
+		include pug/order.pug
+		include pug/about.pug
+		include pug/foo.pug
 		.hidden
 			.popup#call
 				h3.text__h3.popup__title

@@ -3,11 +3,19 @@
 const gulp = require('gulp');
 const watch = require('gulp-watch');
 const spritesmith = require('gulp.spritesmith');
+const livereload = require('gulp-livereload');
+const connect = require('gulp-connect');
+const pug = require('gulp-pug');
 
 gulp.task('sprite', taskSprite);
+gulp.task('pug', taskPug);
+gulp.task('connect', taskConnect);
 
 gulp.task('watch', function() {
+	taskConnect();
+
 	watch('./source/sprite/*.png', taskSprite);
+	watch('./source/*.pug', taskPug).pipe(connect.reload());
 });
 
 
@@ -74,6 +82,13 @@ gulp.task('image:build', function() {
 // 	});
 // }
 
+function taskConnect() {
+	connect.server({
+		root: 'public',
+		livereload: true
+	});
+}
+
 function taskSprite() {
 	let spriteDate = gulp.src('./source/sprite/*.png')
 		.pipe(spritesmith({
@@ -85,5 +100,11 @@ function taskSprite() {
 		}));
 
 	spriteDate.img.pipe(gulp.dest('./public/images/'));
-	spriteDate.css.pipe(gulp.dest('./source/less/spritesmith/'));
+	return spriteDate.css.pipe(gulp.dest('./source/less/spritesmith/'));
+}
+
+function taskPug() {
+	return gulp.src('./source/*.pug')
+	.pipe(pug())
+	.pipe(gulp.dest('./public/'));
 }
