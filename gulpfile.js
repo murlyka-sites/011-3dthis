@@ -1,6 +1,16 @@
-'use strict';
+/*jshint esversion: 6 */
 
-var gulp = require('gulp')
+const gulp = require('gulp');
+const watch = require('gulp-watch');
+const spritesmith = require('gulp.spritesmith');
+
+gulp.task('sprite', taskSprite);
+
+gulp.task('watch', function() {
+	watch('./source/sprite/*.png', taskSprite);
+});
+
+
 /*
 
 
@@ -40,10 +50,32 @@ gulp.task('image:build', function() {
 		.pipe(gulp.dest('./build/images/'));
 });
 */
-gulp.task('spritesmith', function() {
-	var spritesmith = require('gulp.spritesmith');
+// gulp.task('watch', function() {
+// 	var watch = require('gulp-watch');
 
-	var spriteDate = gulp.src('./sprite/*.*')
+// 	// watch('./dev/*.html', watchBatch(['html']));
+// 	//watch('./dev/less/**/*.less', watchBatch(['less']));
+// 	// watch('./dev/css/*.css', watchBatch(['style']));
+// 	watch('./source/sprite/*.png', watchBatch(['spritesmith']));
+
+// 	// watch('./dev/js/*.js', watchBatch(['js']));
+// });
+
+// gulp.task('default', ['watch']);
+// /*
+// * функция обёртка для gulp-watch
+// */
+// function watchBatch(arr) {
+// 	var batch = require('gulp-batch');
+// 	return batch( function(events, done) {
+// 		for(var i = 0; i < arr.length; i++) {
+// 			gulp.start(arr[i], done);
+// 		}
+// 	});
+// }
+
+function taskSprite() {
+	let spriteDate = gulp.src('./source/sprite/*.png')
 		.pipe(spritesmith({
 			imgName: 'sprite.png',
 			cssName: 'sprite.less',
@@ -52,32 +84,6 @@ gulp.task('spritesmith', function() {
 			cssTemplate: 'spritesmith.mustache'
 		}));
 
-	spriteDate.img.pipe(gulp.dest('./images/'));
-	spriteDate.css.pipe(gulp.dest('./less/spritesmith/'));
-	console.log('finally');
-	
-});
-
-gulp.task('watch', function() {
-	var watch = require('gulp-watch');
-
-	// watch('./dev/*.html', watchBatch(['html']));
-	//watch('./dev/less/**/*.less', watchBatch(['less']));
-	// watch('./dev/css/*.css', watchBatch(['style']));
-	watch('./sprite/*.png', watchBatch(['spritesmith']));
-
-	// watch('./dev/js/*.js', watchBatch(['js']));
-});
-
-gulp.task('default', ['watch']);
-/*
-* функция обёртка для gulp-watch
-*/
-function watchBatch(arr) {
-	var batch = require('gulp-batch');
-	return batch( function(events, done) {
-		for(var i = 0; i < arr.length; i++) {
-			gulp.start(arr[i], done);
-		}
-	});
+	spriteDate.img.pipe(gulp.dest('./public/images/'));
+	spriteDate.css.pipe(gulp.dest('./source/less/spritesmith/'));
 }
