@@ -8,12 +8,16 @@ const connect = require('gulp-connect');
 const pug = require('gulp-pug');
 const plumber = require('gulp-plumber');
 const less = require('gulp-less');
+const imagemin = require('gulp-imagemin');
+	
+	imagemin.mozjpeg = require('imagemin-mozjpeg');
+	imagemin.pngquant = require('imagemin-pngquant');
 
 gulp.task('sprite', taskSprite);
 gulp.task('pug', taskPug);
 gulp.task('less', taskLess);
 gulp.task('connect', taskConnect);
-
+gulp.task('imagemin', taskImagemin);
 
 gulp.task('watch', function() {
 	taskConnect();
@@ -21,6 +25,7 @@ gulp.task('watch', function() {
 	watch('./source/sprite/*.png', taskSprite);
 	watch('./source/*.pug', taskPug).pipe(connect.reload());
 	watch('./source/less/*.less', taskLess).pipe(connect.reload());
+	watch('./source/images/*.*', taskImagemin).pipe(connect.reload());
 });
 
 
@@ -124,4 +129,16 @@ function taskPug() {
 		pretty: '\t'
 	}))
 	.pipe(gulp.dest('./public/'));
+}
+
+function taskImagemin() {
+	return gulp.src(['source/images/**/*.jpg', 'source/images/**/*.png', 'source/images/**/*.svg'])
+		.pipe(imagemin([
+			imagemin.gifsicle({interlaced: true}),
+			imagemin.jpegtran({progressive: true}),
+			imagemin.mozjpeg({progressive: true}),
+			imagemin.optipng({optimizationLevel: 7}),
+			imagemin.pngquant({quality: '85-100'})
+		]))
+		.pipe(gulp.dest('public/images/'));
 }
