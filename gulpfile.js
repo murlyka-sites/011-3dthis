@@ -6,6 +6,7 @@ const spritesmith = require('gulp.spritesmith');
 const livereload = require('gulp-livereload');
 const connect = require('gulp-connect');
 const pug = require('gulp-pug');
+const plumber = require('gulp-plumber');
 
 gulp.task('sprite', taskSprite);
 gulp.task('pug', taskPug);
@@ -105,6 +106,7 @@ function taskSprite() {
 
 function taskPug() {
 	return gulp.src('./source/*.pug')
+	.pipe(plumber())
 	.pipe(pug())
 	.pipe(gulp.dest('./public/'));
 }
