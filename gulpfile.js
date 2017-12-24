@@ -7,16 +7,20 @@ const livereload = require('gulp-livereload');
 const connect = require('gulp-connect');
 const pug = require('gulp-pug');
 const plumber = require('gulp-plumber');
+const less = require('gulp-less');
 
 gulp.task('sprite', taskSprite);
 gulp.task('pug', taskPug);
+gulp.task('less', taskLess);
 gulp.task('connect', taskConnect);
+
 
 gulp.task('watch', function() {
 	taskConnect();
 
 	watch('./source/sprite/*.png', taskSprite);
 	watch('./source/*.pug', taskPug).pipe(connect.reload());
+	watch('./source/less/*.less', taskLess).pipe(connect.reload());
 });
 
 
@@ -82,6 +86,15 @@ gulp.task('image:build', function() {
 // 		}
 // 	});
 // }
+
+function taskLess() {
+	return gulp.src('./source/less/*.less')
+		.pipe(plumber())
+		.pipe(less({
+			paths: ['.', 'bower_components']
+		}))
+		.pipe(gulp.dest('./public/css/'));
+}
 
 function taskConnect() {
 	connect.server({
