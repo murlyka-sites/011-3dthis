@@ -107,6 +107,8 @@ function taskSprite() {
 function taskPug() {
 	return gulp.src('./source/*.pug')
 	.pipe(plumber())
-	.pipe(pug())
+	.pipe(pug({
+		pretty: '\t'
+	}))
 	.pipe(gulp.dest('./public/'));
 }
